@@ -1,0 +1,67 @@
+import allure
+import time
+
+from constants import UserData
+from locators.base_page_locators import BasePageLocators
+from locators.restore_password_locators import RestorePasswordPageLocators
+from pages.base_page import BasePage
+
+
+class RestorePasswordPage(BasePage):
+    def __init__(self, driver):
+        super().__init__(driver)
+
+    def page_locator(self):
+        return RestorePasswordPageLocators.RESTORE_PASSWORD_HEADER
+
+
+    @allure.step('кликнуть на ссылку Восстановить пароль')
+    def click_restore_link(self):
+        self.click_locator(RestorePasswordPageLocators.RESTORE_LINK)
+
+
+    @allure.step('ввести значение емейла в поле')
+    def input_email_value(self):
+        self.fill_field(RestorePasswordPageLocators.RESTORE_EMAIL_FIELD, UserData.RESTORE_EMAIL)
+
+
+    @allure.step('ввести значение в поле Пароль')
+    def input_password_value(self):
+        self.fill_field(RestorePasswordPageLocators.RESTORE_PASSWORD_FIELD, UserData.RESTORE_PASSWORD)
+
+
+    @allure.step('кликнуть иконку Показать/скрыть пароль')
+    def click_show_hide_password_button(self):
+        self.click_locator(RestorePasswordPageLocators.SHOW_HIDE_PASSWORD_BUTTON)
+
+
+    @allure.step('кликнуть кнопку Восстановить')
+    def click_restore_button(self):
+        self.click_locator(RestorePasswordPageLocators.RESTORE_BUTTON)
+
+
+    @allure.step('Подождать загрузки поля ввода кода из письма')
+    def await_loaded_enter_code_field(self):
+        self.wait_element(RestorePasswordPageLocators.ENTER_CODE_FROM_EMAIL_FIELD)
+
+    @allure.step('Подождать прогрузки ссылки Личный Кабинет')
+    def await_active_personal_account_link(self):
+        self.wait_element(BasePageLocators.PERSONAL_ACCOUNT_LINK)
+
+    @allure.step('Подождать дезактивации поля пароль')
+    def await_new_password_field(self):
+        self.wait_element(RestorePasswordPageLocators.ENTER_NEW_PASSWORD_FIELD)
+
+    @allure.step('Получить значение типа активности поля Пароля')
+    def get_type_new_password_field(self):
+        value = self.get_element_attribute_value(RestorePasswordPageLocators.ENTER_NEW_PASSWORD_FIELD, "type")
+        return value
+
+    @allure.step('подождать пока элемент исчезнет')
+    def wait_till_modal_form_disappear(self, driver):
+        time.sleep(5)
+        self.wait_till_element_gone(driver, RestorePasswordPageLocators.MODAL_FORM)
+
+    @allure.step('подождать пока элемент исчезнет')
+    def click_enter_code_field(self):
+        self.click_locator(RestorePasswordPageLocators.ENTER_CODE_FROM_EMAIL_FIELD)
