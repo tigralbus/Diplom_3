@@ -3,6 +3,9 @@ class Constants:
     PERSONAL_ACCOUNT_URL = 'https://stellarburgers.nomoreparties.site/account/profile'
     FORGOT_PASSWORD_URL = 'https://stellarburgers.nomoreparties.site/forgot-password'
     RESTORE_PASSWORD_URL = 'https://stellarburgers.nomoreparties.site/reset-password'
+    ORDERS_HISTORY_URL = 'https://stellarburgers.nomoreparties.site/account/order-history'
+    LOGIN_URL = 'https://stellarburgers.nomoreparties.site/login'
+
 
 
 class UserData: #реализовать через апи с созданием и удалением юзера, пока заглушка на константах

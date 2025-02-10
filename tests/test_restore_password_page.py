@@ -1,6 +1,7 @@
 import allure
 from conftest import driver
-from constants import Constants
+from constants import Constants, UserData
+from locators.login_page_locators import LoginPageLocators
 from pages.restore_password_page import RestorePasswordPage
 
 
@@ -25,7 +26,7 @@ class TestMainPageQuestions:
         restore_password_page.wait_till_modal_form_disappear(driver)
         restore_password_page.click_personal_account_link()
         restore_password_page.click_restore_link()
-        restore_password_page.await_loaded()
+        restore_password_page.await_restore_password_header()
         restore_password_page.input_email_value()
         restore_password_page.click_restore_button()
         restore_password_page.await_loaded_enter_code_field()
@@ -40,7 +41,7 @@ class TestMainPageQuestions:
         restore_password_page.wait_till_modal_form_disappear(driver)
         restore_password_page.click_personal_account_link()
         restore_password_page.click_restore_link()
-        restore_password_page.await_loaded()
+        restore_password_page.await_restore_password_header()
         restore_password_page.input_email_value()
         restore_password_page.click_restore_button()
         restore_password_page.await_loaded_enter_code_field()

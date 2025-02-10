@@ -1,3 +1,5 @@
+import time
+
 from selenium.webdriver.support import expected_conditions as EC
 
 import allure
@@ -6,8 +8,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
-from constants import Constants
+from constants import Constants, UserData
 from locators.base_page_locators import BasePageLocators
+from locators.login_page_locators import LoginPageLocators
 
 
 class BasePage:
@@ -15,24 +18,23 @@ class BasePage:
         self.driver = driver
         self.url = Constants.URL
 
-    def await_loaded(self):
-        self.wait_element(self.page_locator())
-
-    def page_locator(self):
-        return None
-
     @allure.step('перейти на стартовую страницу Stellar Burgers')
     def go_to_site(self):
         self.driver.get(Constants.URL)
 
+    @allure.step('перейти на страницу логина')
+    def go_to_login_page(self):
+        self.driver.get(Constants.LOGIN_URL)
+
+
     @allure.step('подождать пока появится локатор')
-    def wait_element(self, locator, time=10):
+    def await_element(self, locator, time=10):
         return WebDriverWait(self.driver, time).until(
             expected_conditions.visibility_of_element_located(locator), message=f'Not find element {locator}')
 
     @allure.step('кликнуть на элемент')
     def click_locator(self, locator):
-        self.wait_element(locator, 10).click()
+        self.await_element(locator, 10).click()
 
     @allure.step('кликнуть на Конструктор')
     def click_constructor_link(self):
@@ -87,6 +89,22 @@ class BasePage:
     def wait_till_element_gone(self, driver, element_name):
         wait = WebDriverWait(driver, 10)  # 10 секунд ожидания
         wait.until(EC.invisibility_of_element_located(element_name))
+
+    @allure.step('кликнуть на кнопку Войти')
+    def click_enter_button(self):
+        self.click_locator(LoginPageLocators.ENTER_BUTTON)
+
+    @allure.step('совершить логин в аккаунт')
+    def login_to_account(self, driver):
+        base_page = BasePage(driver)
+        base_page.go_to_login_page()
+        base_page.fill_field(LoginPageLocators.EMAIL_FIELD,UserData.EMAIL)
+        base_page.fill_field(LoginPageLocators.PASSWORD_FIELD,UserData.PASSWORD)
+        base_page.click_random_place(driver)
+        time.sleep(5)
+        base_page.wait_till_element_gone(driver, BasePageLocators.MODAL_FORM)
+        base_page.click_enter_button()
+
 
     #
     # @allure.step('выбрать значение чекбокса')

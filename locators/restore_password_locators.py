@@ -10,4 +10,3 @@ class RestorePasswordPageLocators:
     ENTER_CODE_FROM_EMAIL_FIELD = [By.XPATH, "//div/label[@class='input__placeholder text noselect text_type_main-default'][text() = 'Введите код из письма']"]
     SHOW_HIDE_PASSWORD_BUTTON = [By.XPATH, "//div/main/div/form//div/div/div[@class='input__icon input__icon-action']"]
     ENTER_NEW_PASSWORD_FIELD = [By.XPATH, "//div/main/div/form//div/input[@class='text input__textfield text_type_main-default'][@name='Введите новый пароль']"]
-    MODAL_FORM = [By.XPATH, "//div/section/div[@class='Modal_modal_overlay__x2ZCr']"]

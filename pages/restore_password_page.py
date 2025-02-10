@@ -11,8 +11,10 @@ class RestorePasswordPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-    def page_locator(self):
-        return RestorePasswordPageLocators.RESTORE_PASSWORD_HEADER
+
+    @allure.step('Подождать прогрузки Заголовки формы восстановления пароля')
+    def await_restore_password_header(self):
+        self.await_element(RestorePasswordPageLocators.RESTORE_PASSWORD_HEADER)
 
 
     @allure.step('кликнуть на ссылку Восстановить пароль')
@@ -42,15 +44,15 @@ class RestorePasswordPage(BasePage):
 
     @allure.step('Подождать загрузки поля ввода кода из письма')
     def await_loaded_enter_code_field(self):
-        self.wait_element(RestorePasswordPageLocators.ENTER_CODE_FROM_EMAIL_FIELD)
+        self.await_element(RestorePasswordPageLocators.ENTER_CODE_FROM_EMAIL_FIELD)
 
     @allure.step('Подождать прогрузки ссылки Личный Кабинет')
     def await_active_personal_account_link(self):
-        self.wait_element(BasePageLocators.PERSONAL_ACCOUNT_LINK)
+        self.await_element(BasePageLocators.PERSONAL_ACCOUNT_LINK)
 
     @allure.step('Подождать дезактивации поля пароль')
     def await_new_password_field(self):
-        self.wait_element(RestorePasswordPageLocators.ENTER_NEW_PASSWORD_FIELD)
+        self.await_element(RestorePasswordPageLocators.ENTER_NEW_PASSWORD_FIELD)
 
     @allure.step('Получить значение типа активности поля Пароля')
     def get_type_new_password_field(self):
@@ -60,8 +62,8 @@ class RestorePasswordPage(BasePage):
     @allure.step('подождать пока элемент исчезнет')
     def wait_till_modal_form_disappear(self, driver):
         time.sleep(5)
-        self.wait_till_element_gone(driver, RestorePasswordPageLocators.MODAL_FORM)
+        self.wait_till_element_gone(driver, BasePageLocators.MODAL_FORM)
 
-    @allure.step('подождать пока элемент исчезнет')
+    @allure.step('кликнуть поле ввода кода из емейла')
     def click_enter_code_field(self):
         self.click_locator(RestorePasswordPageLocators.ENTER_CODE_FROM_EMAIL_FIELD)
