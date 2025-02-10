@@ -1,5 +1,6 @@
 import time
 
+from selenium.common import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.action_chains import ActionChains
 
@@ -59,13 +60,13 @@ class BasePage:
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     @allure.step('переместить один элемент в другой')
-    def move_one_element_to_another_one(self, driver, source_element, target_element):
-        actions = ActionChains(driver)
+    def move_one_element_to_another_one(self, source_element, target_element):
+        actions = ActionChains(self.driver)
         actions.drag_and_drop(source_element, target_element).perform()
 
     @allure.step('вернуть количество элементов соответствующих локатору')
-    def count_elements(self, driver,locator):
-        return len(driver.find_elements(*locator))
+    def count_elements(self, locator):
+        return len(self.driver.find_elements(*locator))
 
     @allure.step('проскроллить страницу к элементу')
     def scroll_to_element(self, element):
@@ -92,12 +93,12 @@ class BasePage:
         return self.driver.current_url
 
     @allure.step('кликнуть на случайное место экрана')
-    def click_random_place(self, driver):
-        ActionChains(driver).move_by_offset(10, 10).click().perform()
+    def click_random_place(self):
+        ActionChains(self.driver).move_by_offset(10, 10).click().perform()
 
     @allure.step('подождать пока элемент исчезнет')
-    def wait_till_element_gone(self, driver, element_name):
-        wait = WebDriverWait(driver, 10)  # 10 секунд ожидания
+    def wait_till_element_gone(self, element_name):
+        wait = WebDriverWait(self.driver, 10)  # 10 секунд ожидания
         wait.until(EC.invisibility_of_element_located(element_name))
 
     @allure.step('кликнуть на кнопку Войти')
@@ -105,28 +106,36 @@ class BasePage:
         self.click_locator(LoginPageLocators.ENTER_BUTTON)
 
     @allure.step('совершить логин в аккаунт')
-    def login_to_account(self, driver):
-        base_page = BasePage(driver)
+    def login_to_account(self):
+        base_page = BasePage(self.driver)
         base_page.go_to_login_page()
         base_page.fill_field(LoginPageLocators.EMAIL_FIELD,UserData.EMAIL)
         base_page.fill_field(LoginPageLocators.PASSWORD_FIELD,UserData.PASSWORD)
-        base_page.click_random_place(driver)
+        base_page.click_random_place()
         time.sleep(5)
-        base_page.wait_till_element_gone(driver, BasePageLocators.MODAL_FORM)
+        base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
         base_page.click_enter_button()
 
     @allure.step('подождать пока элемент исчезнет')
-    def wait_till_modal_form_disappear(self, driver):
+    def wait_till_modal_form_disappear(self):
         time.sleep(5)
-        self.wait_till_element_gone(driver, BasePageLocators.MODAL_FORM)
+        self.wait_till_element_gone(BasePageLocators.MODAL_FORM)
+
+    # @allure.step('проверить является ли элемент видимым')
+    # def element_is_displayed(self, locator):
+    #     modal = self.driver.find_element(*locator)
+    #     return modal.is_displayed()
+
+    @allure.step('проверить является ли элемент видимым')
+    def element_is_displayed(self, locator):
+        try:
+            modal = self.driver.find_element(*locator)
+            print("Класс элемента:", modal.get_attribute("class"))  # Отладка
+            return modal.is_displayed()
+        except NoSuchElementException:
+            return False
 
 
-    #
-    # @allure.step('выбрать значение чекбокса')
-    # def select_checkbox_by_value(self, value):
-    #     checkbox = [By.ID, value]
-    #     self.click_locator(checkbox)
-    #
     # @allure.step('получить список открытых табов')
     # def get_tabs_list(self):
     #     return self.driver.window_handles
@@ -135,6 +144,4 @@ class BasePage:
     # def switch_to_tab(self, tab_number):
     #     self.driver.switch_to.window(self.get_tabs_list()[tab_number])
 
-
-    #
 

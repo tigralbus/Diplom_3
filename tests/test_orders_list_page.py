@@ -20,9 +20,9 @@ class TestOrdersListPage:
         orders_list_page = OrdersListPage(driver)
 
     @allure.title('Раздел «Лента заказов»: Проверка что при создании нового заказа счётчик Выполнено за сегодня увеличивается.')
-    def test_today_orders_counter_increasing_with_new_order(self, driver):
-        orders_list_page = OrdersListPage(driver)
+    def test_today_orders_counter_increasing_with_new_order(self):
+        orders_list_page = OrdersListPage()
 
     @allure.title('Раздел «Лента заказов»: Проверка что после оформления заказа его номер появляется в разделе В работе.')
-    def test_creared_order_id_appears_in_processed_orders_list(self, driver):
-        orders_list_page = OrdersListPage(driver)
+    def test_creared_order_id_appears_in_processed_orders_list(self):
+        orders_list_page = OrdersListPage()

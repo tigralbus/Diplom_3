@@ -6,8 +6,9 @@ class MainPageLocators:
     INGREDIENT_BUN = [By.XPATH, "//div/main//img[@class='BurgerIngredient_ingredient__image__3e-07 ml-4 mr-4'][@alt='Флюоресцентная булка R2-D3']"]
     INGREDIENT_DETAILS_MODAL_HEADER = [By.XPATH, "//div//div/h2[text()='Детали ингредиента']"]
     INGREDIENT_DETAILS_MODAL_CLOSE_ICON = [By.XPATH, "//div/section[@class = 'Modal_modal_opened__3ISw4 Modal_modal__P3_V5']//button[@type = 'button'][@class = 'Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']"]
-    BURGER_CONSTRUCTOR_TOP = [By.XPATH, "//div//div[@class = 'constructor-element constructor-element_pos_top']"]
+    BURGER_CONSTRUCTOR_TOP = [By.XPATH, "//div/main//ul//div[@class = 'constructor-element constructor-element_pos_top']/span/span[@class='constructor-element__action pr-2']"] #"//div//div[@class = 'constructor-element constructor-element_pos_top']/span[@class = 'constructor-element__row']"]#"//div//div[@class = 'constructor-element constructor-element_pos_top']"]
     BUNS_IN_ORDER_FOR_COUNT = [By.XPATH, "//div/main//ul/li[@class = 'BurgerConstructor_basket__listItem__aWMu1 mr-4']"]
     MAKE_ORDER_BUTTON = [By.XPATH, "//div/main//div/button[text()='Оформить заказ']"]
+    ORDER_ID_MODAL_HEADER =  [By.XPATH, "//div/section//div/p[@class = 'undefined text text_type_main-medium mb-15'][text()='идентификатор заказа']"]
 
 
