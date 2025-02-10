@@ -9,6 +9,6 @@ class MainPageLocators:
     BURGER_CONSTRUCTOR_TOP = [By.XPATH, "//div/main//ul//div[@class = 'constructor-element constructor-element_pos_top']/span/span[@class='constructor-element__action pr-2']"] #"//div//div[@class = 'constructor-element constructor-element_pos_top']/span[@class = 'constructor-element__row']"]#"//div//div[@class = 'constructor-element constructor-element_pos_top']"]
     BUNS_IN_ORDER_FOR_COUNT = [By.XPATH, "//div/main//ul/li[@class = 'BurgerConstructor_basket__listItem__aWMu1 mr-4']"]
     MAKE_ORDER_BUTTON = [By.XPATH, "//div/main//div/button[text()='Оформить заказ']"]
-    ORDER_ID_MODAL_HEADER =  [By.XPATH, "//div/section//div/p[@class = 'undefined text text_type_main-medium mb-15'][text()='идентификатор заказа']"]
+    ORDER_CREATED_MODAL_HEADER =  [By.XPATH, "//div/section//div/p[@class = 'undefined text text_type_main-medium mb-15'][text()='идентификатор заказа']"]
 
 

@@ -76,6 +76,6 @@ class TestMainPage:
         main_page.count_ingredients()  # тут бага явная с тем куда перетаскивать, попробовать переписать на 3 шага
         main_page.click_make_order_button()
 
-        assert  main_page.element_is_displayed(MainPageLocators.ORDER_ID_MODAL_HEADER)
+        assert  main_page.element_is_displayed(MainPageLocators.ORDER_CREATED_MODAL_HEADER) #надо переписать в мейн пейдж потом если работает как надо
 
 
