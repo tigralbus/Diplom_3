@@ -7,12 +7,26 @@ from pages.main_page import MainPage
 class TestMainPage:
 
     @allure.title('Основной функционал: Проверка перехода по клику на «Конструктор».')
-    def test_constructor_link_redirect(self, driver):
+    def test_constructor_redirect_by_constructor_link(self, driver):
        main_page = MainPage(driver)
+       main_page.go_to_site()
+       main_page.click_random_place(driver)
+       main_page.wait_till_modal_form_disappear(driver)
+       main_page.click_orders_list_link()
+       main_page.click_constructor_link()
+
+       assert main_page.get_current_url() == Constants.URL
+
 
     @allure.title('Основной функционал: Проверка перехода по клику на «Лента заказов».')
-    def test_orders_list_redirect(self, driver):
+    def test_redirect_by_orders_list(self, driver):
        main_page = MainPage(driver)
+       main_page.go_to_site()
+       main_page.click_random_place(driver)
+       main_page.wait_till_modal_form_disappear(driver)
+       main_page.click_orders_list_link()
+
+       assert main_page.get_current_url() == Constants.ORDERS_LIST_URL
 
 
     @allure.title('Основной функционал: Проверка если кликнуть на ингредиент, появится всплывающее окно с деталями.')

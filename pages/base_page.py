@@ -1,6 +1,7 @@
 import time
 
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.action_chains import ActionChains
 
 import allure
 from selenium.webdriver import ActionChains
@@ -57,6 +58,15 @@ class BasePage:
     def scroll_till_end(self):
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
+    @allure.step('переместить один элемент в другой')
+    def move_one_element_to_another_one(self, driver, source_element, target_element):
+        actions = ActionChains(driver)
+        actions.drag_and_drop(source_element, target_element).perform()
+
+    @allure.step('вернуть количество элементов соответствующих локатору')
+    def count_elements(self, driver,locator):
+        return len(driver.find_elements(*locator))
+
     @allure.step('проскроллить страницу к элементу')
     def scroll_to_element(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
@@ -104,6 +114,11 @@ class BasePage:
         time.sleep(5)
         base_page.wait_till_element_gone(driver, BasePageLocators.MODAL_FORM)
         base_page.click_enter_button()
+
+    @allure.step('подождать пока элемент исчезнет')
+    def wait_till_modal_form_disappear(self, driver):
+        time.sleep(5)
+        self.wait_till_element_gone(driver, BasePageLocators.MODAL_FORM)
 
 
     #

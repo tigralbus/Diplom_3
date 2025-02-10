@@ -2,23 +2,12 @@ from selenium.webdriver.common.by import By
 
 
 class MainPageLocators:
-    MAIN_PAGE_HEADER = [By.CLASS_NAME, 'Home_Header__iJKdX']
-    LOWER_ORDER_BUTTON = [By.XPATH, "//div[@class='Home_FinishButton__1_cWm']/button[text() = 'Заказать']"]
+    MAKE_BURGER_HEADER = [By.XPATH, "//div/main/section[@class = 'BurgerIngredients_ingredients__1N8v2']/h1"] #[By.XPATH, "//div/main//h1[@class='text text_type_main-large mb-5 mt-10'][text()='Соберите бургер']"]
+    INGREDIENT_BUN = [By.XPATH, "//div/main//img[@class='BurgerIngredient_ingredient__image__3e-07 ml-4 mr-4'][@alt='Флюоресцентная булка R2-D3']"]
+    INGREDIENT_DETAILS_MODAL_HEADER = [By.XPATH, "//div//div/h2[text()='Детали ингредиента']"]
+    INGREDIENT_DETAILS_MODAL_CLOSE_ICON = [By.XPATH, "//div/section[@class = 'Modal_modal_opened__3ISw4 Modal_modal__P3_V5']//button[@type = 'button'][@class = 'Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']"]
+    BURGER_CONSTRUCTOR_TOP = [By.XPATH, "//div//div[@class = 'constructor-element constructor-element_pos_top']"]
+    BUNS_IN_ORDER_FOR_COUNT = [By.XPATH, "//div/main//ul/li[@class = 'BurgerConstructor_basket__listItem__aWMu1 mr-4']"]
+    MAKE_ORDER_BUTTON = [By.XPATH, "//div/main//div/button[text()='Оформить заказ']"]
 
-    COST_QUESTION = [By.ID, 'accordion__heading-0']
-    SEVERAL_SCOOTERS_QUESTION = [By.ID, 'accordion__heading-1']
-    RENT_TIME_QUESTION = [By.ID, 'accordion__heading-2']
-    ORDER_TODAY_QUESTION = [By.ID, 'accordion__heading-3']
-    CHANGE_RENT_TIME_QUESTION = [By.ID, 'accordion__heading-4']
-    CHARGE_SCOOTER_QUESTION = [By.ID, 'accordion__heading-5']
-    DECLINE_ORDER_QUESTION = [By.ID, 'accordion__heading-6']
-    COUNTRYSIDE_DELIVERY_QUESTION = [By.ID, 'accordion__heading-7']
 
-    COST_QUESTION_ANSWER = [By.ID, 'accordion__panel-0']
-    SEVERAL_SCOOTERS_QUESTION_ANSWER = [By.ID, 'accordion__panel-1']
-    RENT_TIME_QUESTION_ANSWER = [By.ID, 'accordion__panel-2']
-    ORDER_TODAY_QUESTION_ANSWER = [By.ID, 'accordion__panel-3']
-    CHANGE_RENT_TIME_QUESTION_ANSWER = [By.ID, 'accordion__panel-4']
-    CHARGE_SCOOTER_QUESTION_ANSWER = [By.ID, 'accordion__panel-5']
-    DECLINE_ORDER_QUESTION_ANSWER = [By.ID, 'accordion__panel-6']
-    COUNTRYSIDE_DELIVERY_QUESTION_ANSWER = [By.ID, 'accordion__panel-7']

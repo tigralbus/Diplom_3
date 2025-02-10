@@ -30,8 +30,3 @@ class PersonalAccountPage(BasePage):
     @allure.step('Подождать загрузки Профиля')
     def await_loaded_login_page_header(self):
         self.await_element(LoginPageLocators.LOGIN_FORM_HEADER)
-
-    @allure.step('подождать пока элемент исчезнет')
-    def wait_till_modal_form_disappear(self, driver):
-        time.sleep(5)
-        self.wait_till_element_gone(driver, BasePageLocators.MODAL_FORM)
