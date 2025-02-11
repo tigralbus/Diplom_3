@@ -2,17 +2,17 @@ import time
 
 from selenium.common import NoSuchElementException
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
 
 import allure
 from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.wait import WebDriverWait
 
 from constants import Constants, UserData
 from locators.base_page_locators import BasePageLocators
 from locators.login_page_locators import LoginPageLocators
+from locators.main_page_locators import MainPageLocators
+from locators.personal_account_locators import PersonalAccountPageLocators
 
 
 class BasePage:
@@ -27,7 +27,6 @@ class BasePage:
     @allure.step('перейти на страницу логина')
     def go_to_login_page(self):
         self.driver.get(Constants.LOGIN_URL)
-
 
     @allure.step('подождать пока появится локатор')
     def await_element(self, locator, time=10):
@@ -62,7 +61,8 @@ class BasePage:
     @allure.step('переместить один элемент в другой')
     def move_one_element_to_another_one(self, source_element_locator, target_element_locator):
         actions = ActionChains(self.driver)
-        actions.drag_and_drop(self.driver.find_element(*source_element_locator), self.driver.find_element(*target_element_locator)).perform()
+        actions.drag_and_drop(self.driver.find_element(*source_element_locator),
+                              self.driver.find_element(*target_element_locator)).perform()
 
     @allure.step('вернуть количество элементов соответствующих локатору')
     def count_elements(self, locator):
@@ -85,7 +85,7 @@ class BasePage:
     @allure.step('получить значение аттрибута элемента')
     def get_element_attribute_value(self, element_name, attribute):
         element = self.driver.find_element(*element_name)
-        attribute_value= element.get_attribute(attribute)
+        attribute_value = element.get_attribute(attribute)
         return attribute_value
 
     @allure.step('получить урл текущей табы')
@@ -101,24 +101,9 @@ class BasePage:
         wait = WebDriverWait(self.driver, 10)  # 10 секунд ожидания
         wait.until(EC.invisibility_of_element_located(element_name))
 
-    @allure.step('кликнуть на кнопку Войти')
-    def click_enter_button(self):
-        self.click_locator(LoginPageLocators.ENTER_BUTTON)
-
-    @allure.step('совершить логин в аккаунт')
-    def login_to_account(self):
-        base_page = BasePage(self.driver)
-        base_page.go_to_login_page()
-        base_page.fill_field(LoginPageLocators.EMAIL_FIELD,UserData.EMAIL)
-        base_page.fill_field(LoginPageLocators.PASSWORD_FIELD,UserData.PASSWORD)
-        base_page.click_random_place()
-        time.sleep(5)
-        base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
-        base_page.click_enter_button()
-
-    @allure.step('подождать пока элемент исчезнет')
+    @allure.step('подождать пока модальное окно на весь экран исчезнет')
     def wait_till_modal_form_disappear(self):
-        time.sleep(5)
+        time.sleep(5)  # в фаерфоксе часто зависает, поэтому добавила слип на эту функцию
         self.wait_till_element_gone(BasePageLocators.MODAL_FORM)
 
     @allure.step('проверить является ли элемент видимым')
@@ -130,12 +115,71 @@ class BasePage:
         except NoSuchElementException:
             return False
 
-    # @allure.step('получить список открытых табов')
-    # def get_tabs_list(self):
-    #     return self.driver.window_handles
-    #
-    # @allure.step('переключиться на табу {tab_number}')
-    # def switch_to_tab(self, tab_number):
-    #     self.driver.switch_to.window(self.get_tabs_list()[tab_number])
+    @allure.step('кликнуть на кнопку Войти')
+    def click_enter_button(self):
+        self.click_locator(LoginPageLocators.ENTER_BUTTON)
 
+    @allure.step('совершить логин в аккаунт')
+    def login_to_account(self):
+        base_page = BasePage(self.driver)
+        base_page.go_to_login_page()
+        base_page.fill_field(LoginPageLocators.EMAIL_FIELD, UserData.EMAIL)
+        base_page.fill_field(LoginPageLocators.PASSWORD_FIELD, UserData.PASSWORD)
+        base_page.click_random_place()
+        time.sleep(5)
+        base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
+        base_page.click_enter_button()
+        base_page.click_random_place()
+        base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
 
+    @allure.step('совершить логин и оформить заказ')
+    def login_and_create_new_order(self):
+        base_page = BasePage(self.driver)
+        base_page.login_to_account()
+        base_page.move_one_element_to_another_one(MainPageLocators.INGREDIENT_BUN,
+                                                  MainPageLocators.BURGER_CONSTRUCTOR_TOP)
+        base_page.await_element(MainPageLocators.MAKE_ORDER_BUTTON)
+        base_page.click_locator(MainPageLocators.MAKE_ORDER_BUTTON)
+        base_page.await_element(MainPageLocators.CLOSE_BUTTON_CREATED_MODAL_POP_UP)
+        base_page.wait_till_element_gone(MainPageLocators.PREORDER_ID)
+        base_page.click_locator(MainPageLocators.CLOSE_BUTTON_CREATED_MODAL_POP_UP)
+
+    @allure.step('совершить логин и оформить заказ')
+    def create_new_order(self):
+        base_page = BasePage(self.driver)
+        base_page.click_constructor_link()
+        base_page.move_one_element_to_another_one(MainPageLocators.INGREDIENT_BUN,
+                                                  MainPageLocators.BURGER_CONSTRUCTOR_TOP)
+        base_page.await_element(MainPageLocators.MAKE_ORDER_BUTTON)
+        base_page.click_locator(MainPageLocators.MAKE_ORDER_BUTTON)
+        base_page.await_element(MainPageLocators.CLOSE_BUTTON_CREATED_MODAL_POP_UP)
+        base_page.wait_till_element_gone(MainPageLocators.PREORDER_ID)
+        base_page.click_locator(MainPageLocators.CLOSE_BUTTON_CREATED_MODAL_POP_UP)
+
+    @allure.step('совершить логин и оформить заказ')
+    def create_new_order_and_return_order_id(self):
+        base_page = BasePage(self.driver)
+        base_page.click_constructor_link()
+        base_page.move_one_element_to_another_one(MainPageLocators.INGREDIENT_BUN,
+                                                  MainPageLocators.BURGER_CONSTRUCTOR_TOP)
+        base_page.await_element(MainPageLocators.MAKE_ORDER_BUTTON)
+        base_page.click_locator(MainPageLocators.MAKE_ORDER_BUTTON)
+        base_page.await_element(MainPageLocators.CLOSE_BUTTON_CREATED_MODAL_POP_UP)
+        base_page.wait_till_element_gone(MainPageLocators.PREORDER_ID)
+        order_id = base_page.get_element_text(MainPageLocators.ORDER_ID_MODAL_POP_UP)
+        base_page.click_locator(MainPageLocators.CLOSE_BUTTON_CREATED_MODAL_POP_UP)
+        return order_id
+
+    @allure.step('получить список id заказов на странице')
+    def create_list_of_orders_ids(self, list_elements_locator):
+        list_ids = []
+        list_elements_count = self.count_elements(list_elements_locator)
+        for i in range(1, list_elements_count):
+            locator = BasePageLocators().get_order_locator_by_index(i)
+            order_id = self.get_element_text(locator)
+            list_ids.append(order_id)
+        return list_ids
+
+    @allure.step('получить список id заказов на странице истории заказов')
+    def get_history_orders_ids_list(self):
+        return self.create_list_of_orders_ids(PersonalAccountPageLocators.ORDERS_LIST_HISTORY)

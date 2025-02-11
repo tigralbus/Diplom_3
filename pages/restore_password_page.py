@@ -1,5 +1,4 @@
 import allure
-import time
 
 from constants import UserData
 from locators.base_page_locators import BasePageLocators
@@ -11,31 +10,25 @@ class RestorePasswordPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
 
-
     @allure.step('Подождать прогрузки Заголовки формы восстановления пароля')
     def await_restore_password_header(self):
         self.await_element(RestorePasswordPageLocators.RESTORE_PASSWORD_HEADER)
-
 
     @allure.step('кликнуть на ссылку Восстановить пароль')
     def click_restore_link(self):
         self.click_locator(RestorePasswordPageLocators.RESTORE_LINK)
 
-
     @allure.step('ввести значение емейла в поле')
     def input_email_value(self):
         self.fill_field(RestorePasswordPageLocators.RESTORE_EMAIL_FIELD, UserData.RESTORE_EMAIL)
-
 
     @allure.step('ввести значение в поле Пароль')
     def input_password_value(self):
         self.fill_field(RestorePasswordPageLocators.RESTORE_PASSWORD_FIELD, UserData.RESTORE_PASSWORD)
 
-
     @allure.step('кликнуть иконку Показать/скрыть пароль')
     def click_show_hide_password_button(self):
         self.click_locator(RestorePasswordPageLocators.SHOW_HIDE_PASSWORD_BUTTON)
-
 
     @allure.step('кликнуть кнопку Восстановить')
     def click_restore_button(self):

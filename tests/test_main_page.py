@@ -65,8 +65,6 @@ class TestMainPage:
     def test_authorized_user_can_create_order(self, driver):
         main_page = MainPage(driver)
         main_page.login_to_account()
-        main_page.click_random_place()
-        main_page.wait_till_modal_form_disappear()
         main_page.count_ingredients()
         main_page.click_make_order_button()
         main_page.await_new_order_modal_window_appears()
