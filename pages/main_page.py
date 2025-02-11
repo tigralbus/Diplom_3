@@ -1,5 +1,4 @@
 import allure
-
 from locators.main_page_locators import MainPageLocators
 from pages.base_page import BasePage
 
@@ -7,7 +6,6 @@ from pages.base_page import BasePage
 class MainPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
-
 
     @allure.step('кликнуть на ингредиент')
     def click_ingredient(self):
@@ -25,9 +23,13 @@ class MainPage(BasePage):
     def await_ingredient_modal_window_is_gone(self):
         self.wait_till_element_gone(MainPageLocators.INGREDIENT_DETAILS_MODAL_HEADER)
 
+    @allure.step('подождать появление модального окна с новым заказом')
+    def await_new_order_modal_window_appears(self):
+        self.wait_till_element_gone(MainPageLocators.INGREDIENT_DETAILS_MODAL_HEADER)
+
     @allure.step('посчитать количество ингредиента')
     def count_ingredients(self):
-        self.count_elements(MainPageLocators.BUNS_IN_ORDER_FOR_COUNT)
+        return self.count_elements(MainPageLocators.BUNS_IN_ORDER_FOR_COUNT)
 
     @allure.step('перетащить ингредиент в заказ')
     def add_ingredient_to_order(self):
@@ -36,3 +38,7 @@ class MainPage(BasePage):
     @allure.step('кликнуть на кнопку Оформить заказ')
     def click_make_order_button(self):
         self.click_locator(MainPageLocators.MAKE_ORDER_BUTTON)
+
+    @allure.step('кликнуть на кнопку Оформить заказ')
+    def check_new_order_modal_header_displayed(self):
+        return self.element_is_displayed(MainPageLocators.ORDER_CREATED_MODAL_HEADER)

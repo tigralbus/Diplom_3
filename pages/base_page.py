@@ -60,9 +60,9 @@ class BasePage:
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
 
     @allure.step('переместить один элемент в другой')
-    def move_one_element_to_another_one(self, source_element, target_element):
+    def move_one_element_to_another_one(self, source_element_locator, target_element_locator):
         actions = ActionChains(self.driver)
-        actions.drag_and_drop(source_element, target_element).perform()
+        actions.drag_and_drop(self.driver.find_element(*source_element_locator), self.driver.find_element(*target_element_locator)).perform()
 
     @allure.step('вернуть количество элементов соответствующих локатору')
     def count_elements(self, locator):
@@ -121,11 +121,6 @@ class BasePage:
         time.sleep(5)
         self.wait_till_element_gone(BasePageLocators.MODAL_FORM)
 
-    # @allure.step('проверить является ли элемент видимым')
-    # def element_is_displayed(self, locator):
-    #     modal = self.driver.find_element(*locator)
-    #     return modal.is_displayed()
-
     @allure.step('проверить является ли элемент видимым')
     def element_is_displayed(self, locator):
         try:
@@ -134,7 +129,6 @@ class BasePage:
             return modal.is_displayed()
         except NoSuchElementException:
             return False
-
 
     # @allure.step('получить список открытых табов')
     # def get_tabs_list(self):
