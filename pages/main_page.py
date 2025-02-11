@@ -23,9 +23,13 @@ class MainPage(BasePage):
     def await_ingredient_modal_window_is_gone(self):
         self.wait_till_element_gone(MainPageLocators.INGREDIENT_DETAILS_MODAL_HEADER)
 
-    @allure.step('подождать появление модального окна с новым заказом')
-    def await_new_order_modal_window_appears(self):
-        self.wait_till_element_gone(MainPageLocators.INGREDIENT_DETAILS_MODAL_HEADER)
+    @allure.step('подождать исчезновения дефолтного 9999 с модального окна с деталями нового заказа')
+    def await_new_order_modal_window_default_id_gone(self):
+        self.wait_till_element_gone(MainPageLocators.PREORDER_ID)
+
+    # @allure.step('подождать появление модального окна с новым заказом')
+    # def await_new_order_modal_window_appears(self):
+    #     self.wait_till_element_gone(MainPageLocators.MODAL_WINDOW_NEW_ORDER)
 
     @allure.step('посчитать количество ингредиента')
     def count_ingredients(self):
@@ -39,6 +43,6 @@ class MainPage(BasePage):
     def click_make_order_button(self):
         self.click_locator(MainPageLocators.MAKE_ORDER_BUTTON)
 
-    @allure.step('кликнуть на кнопку Оформить заказ')
-    def check_new_order_modal_header_displayed(self):
-        return self.element_is_displayed(MainPageLocators.ORDER_CREATED_MODAL_HEADER)
+    @allure.step('проверить что хедер модального окна отображается')
+    def await_new_order_modal_header_displayed(self):
+        return self.element_is_displayed(MainPageLocators.MODAL_WINDOW_NEW_ORDER)

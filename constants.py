@@ -7,6 +7,7 @@ class Constants:
     LOGIN_URL = 'https://stellarburgers.nomoreparties.site/login'
     INGREDIENT_BUN_DETAILS_URL = 'https://stellarburgers.nomoreparties.site/ingredient/61c0c5a71d1f82001bdaaa6d'
     ORDERS_LIST_URL = 'https://stellarburgers.nomoreparties.site/feed'
+    API_URL = 'https://stellarburgers.nomoreparties.site/api'
 
 
 

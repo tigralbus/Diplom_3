@@ -1,5 +1,5 @@
 import allure
-from conftest import driver
+from conftest import driver, disposable_user, new_user_parameters
 from constants import Constants
 from pages.main_page import MainPage
 
@@ -62,11 +62,16 @@ class TestMainPage:
         assert main_page.count_ingredients() == 2
 
     @allure.title('Основной функционал: Проверка что залогиненный пользователь может оформить заказ.')
-    def test_authorized_user_can_create_order(self, driver):
+    def test_authorized_user_can_create_order(self, driver, new_user_parameters, disposable_user):
         main_page = MainPage(driver)
         main_page.login_to_account()
+        #access_token, new_user_parameters, response = disposable_user #постоянно падает
+        #main_page.login_to_account_create_user_api(new_user_parameters)
         main_page.count_ingredients()
         main_page.click_make_order_button()
-        main_page.await_new_order_modal_window_appears()
+        #main_page.await_new_order_modal_window_default_id_gone()
 
+        success = main_page.check_new_order_modal_header_displayed()
+        if not success:
+            print("ololo")
         assert main_page.check_new_order_modal_header_displayed() == True

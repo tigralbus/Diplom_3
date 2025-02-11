@@ -13,7 +13,7 @@ class MainPageLocators:
     BUNS_IN_ORDER_FOR_COUNT = [By.XPATH, "//li[@class = 'BurgerConstructor_basket__listItem__aWMu1 mr-4']"]
     MAKE_ORDER_BUTTON = [By.XPATH, "//button[text()='Оформить заказ']"]
     ORDER_CREATED_MODAL_HEADER = [By.XPATH,
-                                  "//p[@class = 'undefined text text_type_main-medium mb-15'][text()='идентификатор заказа']"]
+                                  "//p[text()='идентификатор заказа']"]
     CLOSE_BUTTON_CREATED_MODAL_POP_UP = [By.XPATH,
                                          "//button[@class = 'Modal_modal__close_modified__3V5XS Modal_modal__close__TnseK']"]
     PREORDER_ID = [By.XPATH,
@@ -21,3 +21,6 @@ class MainPageLocators:
 
     ORDER_ID_MODAL_POP_UP = [By.XPATH,
                              "//h2[@class = 'Modal_modal__title_shadow__3ikwq Modal_modal__title__2L34m text text_type_digits-large mb-8']"]
+
+    MODAL_WINDOW_NEW_ORDER = [By.XPATH,
+                             "//div[@class = 'Modal_modal__contentBox__sCy8X pt-30 pb-30']"]

@@ -110,7 +110,13 @@ class BasePage:
     def element_is_displayed(self, locator):
         try:
             modal = self.driver.find_element(*locator)
-            print("Класс элемента:", modal.get_attribute("class"))  # Отладка
+            return modal.is_displayed()
+        except NoSuchElementException:
+            return False
+    @allure.step('дождаться видимости элемента')
+    def await_element_is_displayed(self, locator):
+        try:
+            modal = self.await_element(*locator)
             return modal.is_displayed()
         except NoSuchElementException:
             return False
@@ -125,6 +131,19 @@ class BasePage:
         base_page.go_to_login_page()
         base_page.fill_field(LoginPageLocators.EMAIL_FIELD, UserData.EMAIL)
         base_page.fill_field(LoginPageLocators.PASSWORD_FIELD, UserData.PASSWORD)
+        base_page.click_random_place()
+        time.sleep(5)
+        base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
+        base_page.click_enter_button()
+        base_page.click_random_place()
+        base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
+
+    @allure.step('совершить логин в аккаунт')
+    def login_to_account_create_user_api(self, new_user_parameters):
+        base_page = BasePage(self.driver)
+        base_page.go_to_login_page()
+        base_page.fill_field(LoginPageLocators.EMAIL_FIELD, new_user_parameters["email"])
+        base_page.fill_field(LoginPageLocators.PASSWORD_FIELD, new_user_parameters["password"])
         base_page.click_random_place()
         time.sleep(5)
         base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
