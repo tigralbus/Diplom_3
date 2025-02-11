@@ -1,6 +1,7 @@
 import time
+from time import sleep
 
-from selenium.common import NoSuchElementException
+from selenium.common import NoSuchElementException, TimeoutException, ElementClickInterceptedException
 from selenium.webdriver.support import expected_conditions as EC
 
 import allure
@@ -35,7 +36,14 @@ class BasePage:
 
     @allure.step('кликнуть на элемент')
     def click_locator(self, locator):
-        self.await_element(locator, 10).click()
+        element = (self.await_element(locator, 10))
+        try:
+            element.click()
+        except ElementClickInterceptedException:
+            # в Firefox оверлей может перехватывать клики несмотря на успешное ожидание
+            # wait_till_element_gone(BasePageLocators.MODAL_FORM)
+            sleep(1)
+            element.click()
 
     @allure.step('кликнуть на Конструктор')
     def click_constructor_link(self):
@@ -97,14 +105,14 @@ class BasePage:
         ActionChains(self.driver).move_by_offset(10, 10).click().perform()
 
     @allure.step('подождать пока элемент исчезнет')
-    def wait_till_element_gone(self, element_name):
-        wait = WebDriverWait(self.driver, 10)  # 10 секунд ожидания
+    def wait_till_element_gone(self, element_name, time=10):  # 10 секунд ожидания
+        wait = WebDriverWait(self.driver, time)
         wait.until(EC.invisibility_of_element_located(element_name))
 
     @allure.step('подождать пока модальное окно на весь экран исчезнет')
     def wait_till_modal_form_disappear(self):
-        time.sleep(5)  # в фаерфоксе часто зависает, поэтому добавила слип на эту функцию
-        self.wait_till_element_gone(BasePageLocators.MODAL_FORM)
+        self.wait_till_element_gone(BasePageLocators.MODAL_FORM, 10)
+        time.sleep(1)  # в фаерфоксе часто зависает (не visible, но перехватывает клики)
 
     @allure.step('проверить является ли элемент видимым')
     def element_is_displayed(self, locator):
@@ -113,12 +121,13 @@ class BasePage:
             return modal.is_displayed()
         except NoSuchElementException:
             return False
+
     @allure.step('дождаться видимости элемента')
     def await_element_is_displayed(self, locator):
         try:
-            modal = self.await_element(*locator)
+            modal = self.await_element(locator)
             return modal.is_displayed()
-        except NoSuchElementException:
+        except TimeoutException:
             return False
 
     @allure.step('кликнуть на кнопку Войти')
@@ -131,9 +140,9 @@ class BasePage:
         base_page.go_to_login_page()
         base_page.fill_field(LoginPageLocators.EMAIL_FIELD, UserData.EMAIL)
         base_page.fill_field(LoginPageLocators.PASSWORD_FIELD, UserData.PASSWORD)
-        base_page.click_random_place()
-        time.sleep(5)
-        base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
+        # base_page.click_random_place()
+        # time.sleep(5)
+        # base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)
         base_page.click_enter_button()
         base_page.click_random_place()
         base_page.wait_till_element_gone(BasePageLocators.MODAL_FORM)

@@ -10,8 +10,6 @@ class TestMainPage:
     def test_constructor_redirect_by_constructor_link(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_site()
-        main_page.click_random_place()
-        main_page.wait_till_modal_form_disappear()
         main_page.click_orders_list_link()
         main_page.click_constructor_link()
 
@@ -21,8 +19,6 @@ class TestMainPage:
     def test_redirect_by_orders_list(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_site()
-        main_page.click_random_place()
-        main_page.wait_till_modal_form_disappear()
         main_page.click_orders_list_link()
 
         assert main_page.get_current_url() == Constants.ORDERS_LIST_URL
@@ -31,8 +27,6 @@ class TestMainPage:
     def test_pop_up_window_appears_by_ingredient_click(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_site()
-        main_page.click_random_place()
-        main_page.wait_till_modal_form_disappear()
         main_page.click_ingredient()
 
         assert main_page.get_current_url() == Constants.INGREDIENT_BUN_DETAILS_URL
@@ -41,8 +35,6 @@ class TestMainPage:
     def test_pop_up_window_closed_by_x_icon(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_site()
-        main_page.click_random_place()
-        main_page.wait_till_modal_form_disappear()
         main_page.click_ingredient()
         main_page.click_close_icon_ingredient_details()
         main_page.await_ingredient_modal_window_is_gone()
@@ -54,8 +46,6 @@ class TestMainPage:
     def test_ingredients_counter_increasing_by_adding_new_ingredient(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_site()
-        main_page.click_random_place()
-        main_page.wait_till_modal_form_disappear()
         main_page.add_ingredient_to_order()
         main_page.count_ingredients()
 
@@ -64,14 +54,10 @@ class TestMainPage:
     @allure.title('Основной функционал: Проверка что залогиненный пользователь может оформить заказ.')
     def test_authorized_user_can_create_order(self, driver, new_user_parameters, disposable_user):
         main_page = MainPage(driver)
-        main_page.login_to_account()
-        #access_token, new_user_parameters, response = disposable_user #постоянно падает
-        #main_page.login_to_account_create_user_api(new_user_parameters)
+        # main_page.login_to_account()
+        access_token, new_user_parameters, response = disposable_user #постоянно падает
+        main_page.login_to_account_create_user_api(new_user_parameters)
         main_page.count_ingredients()
         main_page.click_make_order_button()
-        #main_page.await_new_order_modal_window_default_id_gone()
 
-        success = main_page.check_new_order_modal_header_displayed()
-        if not success:
-            print("ololo")
-        assert main_page.check_new_order_modal_header_displayed() == True
+        assert main_page.await_new_order_modal_header_displayed() == True

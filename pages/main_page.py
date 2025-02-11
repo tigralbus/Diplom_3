@@ -45,4 +45,4 @@ class MainPage(BasePage):
 
     @allure.step('проверить что хедер модального окна отображается')
     def await_new_order_modal_header_displayed(self):
-        return self.element_is_displayed(MainPageLocators.MODAL_WINDOW_NEW_ORDER)
+        return self.await_element_is_displayed(MainPageLocators.MODAL_WINDOW_NEW_ORDER)
