@@ -1,7 +1,6 @@
 import allure
 
 from constants import UserData
-from locators.base_page_locators import BasePageLocators
 from locators.restore_password_locators import RestorePasswordPageLocators
 from pages.base_page import BasePage
 
@@ -37,10 +36,6 @@ class RestorePasswordPage(BasePage):
     @allure.step('Подождать загрузки поля ввода кода из письма')
     def await_loaded_enter_code_field(self):
         self.await_element(RestorePasswordPageLocators.ENTER_CODE_FROM_EMAIL_FIELD)
-
-    @allure.step('Подождать прогрузки ссылки Личный Кабинет')
-    def await_active_personal_account_link(self):
-        self.await_element(BasePageLocators.PERSONAL_ACCOUNT_LINK)
 
     @allure.step('Подождать дезактивации поля пароль')
     def await_new_password_field(self):

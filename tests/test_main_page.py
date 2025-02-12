@@ -54,7 +54,6 @@ class TestMainPage:
     @allure.title('Основной функционал: Проверка что залогиненный пользователь может оформить заказ.')
     def test_authorized_user_can_create_order(self, driver, new_user_parameters, disposable_user):
         main_page = MainPage(driver)
-        # main_page.login_to_account()
         access_token, new_user_parameters, response = disposable_user #постоянно падает
         main_page.login_to_account_create_user_api(new_user_parameters)
         main_page.count_ingredients()

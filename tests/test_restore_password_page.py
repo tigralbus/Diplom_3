@@ -11,8 +11,6 @@ class TestMainPageQuestions:
     def test_restore_link_redirect_to_restore_form(self, driver):
         restore_password_page = RestorePasswordPage(driver)
         restore_password_page.go_to_site()
-        restore_password_page.click_random_place()
-        restore_password_page.wait_till_modal_form_disappear()
         restore_password_page.click_personal_account_link()
         restore_password_page.click_restore_link()
 
@@ -22,8 +20,6 @@ class TestMainPageQuestions:
     def test_enter_email_click_restore_button(self, driver):
         restore_password_page = RestorePasswordPage(driver)
         restore_password_page.go_to_site()
-        restore_password_page.click_random_place()
-        restore_password_page.wait_till_modal_form_disappear()
         restore_password_page.click_personal_account_link()
         restore_password_page.click_restore_link()
         restore_password_page.await_restore_password_header()
@@ -38,8 +34,6 @@ class TestMainPageQuestions:
     def test_click_hide_show_button_activates_password_field(self, driver):
         restore_password_page = RestorePasswordPage(driver)
         restore_password_page.go_to_site()
-        restore_password_page.click_random_place()
-        restore_password_page.wait_till_modal_form_disappear()
         restore_password_page.click_personal_account_link()
         restore_password_page.click_restore_link()
         restore_password_page.await_restore_password_header()

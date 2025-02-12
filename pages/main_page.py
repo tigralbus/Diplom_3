@@ -27,10 +27,6 @@ class MainPage(BasePage):
     def await_new_order_modal_window_default_id_gone(self):
         self.wait_till_element_gone(MainPageLocators.PREORDER_ID)
 
-    # @allure.step('подождать появление модального окна с новым заказом')
-    # def await_new_order_modal_window_appears(self):
-    #     self.wait_till_element_gone(MainPageLocators.MODAL_WINDOW_NEW_ORDER)
-
     @allure.step('посчитать количество ингредиента')
     def count_ingredients(self):
         return self.count_elements(MainPageLocators.BUNS_IN_ORDER_FOR_COUNT)

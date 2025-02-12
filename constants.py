@@ -9,14 +9,6 @@ class Constants:
     ORDERS_LIST_URL = 'https://stellarburgers.nomoreparties.site/feed'
     API_URL = 'https://stellarburgers.nomoreparties.site/api'
 
-
-
-class UserData: #реализовать через апи с созданием и удалением юзера, пока заглушка на константах
-    EMAIL = 'anastasia_dotsina_16_158@ya.ru'
-    PASSWORD = '123456'
+class UserData:
     RESTORE_EMAIL = 'test_dkbahbsfljh@ya_test.ru'
     RESTORE_PASSWORD = 'restorePASSWORD666666'
-
-class Answers:
-    cost_question_answer_text = 'Сутки — 400 рублей. Оплата курьеру — наличными или картой.'
-    several_scooters_question_answer_text = 'Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями, можете просто сделать несколько заказов — один за другим.'
