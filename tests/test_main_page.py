@@ -10,8 +10,8 @@ class TestMainPage:
     def test_constructor_redirect_by_constructor_link(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_site()
-        main_page.click_orders_list_link()
-        main_page.click_constructor_link()
+        main_page.navigation.click_orders_list_link()
+        main_page.navigation.click_constructor_link()
 
         assert main_page.get_current_url() == Constants.URL
 
@@ -19,7 +19,7 @@ class TestMainPage:
     def test_redirect_by_orders_list(self, driver):
         main_page = MainPage(driver)
         main_page.go_to_site()
-        main_page.click_orders_list_link()
+        main_page.navigation.click_orders_list_link()
 
         assert main_page.get_current_url() == Constants.ORDERS_LIST_URL
 
@@ -54,8 +54,10 @@ class TestMainPage:
     @allure.title('Основной функционал: Проверка что залогиненный пользователь может оформить заказ.')
     def test_authorized_user_can_create_order(self, driver, new_user_parameters, disposable_user):
         main_page = MainPage(driver)
-        access_token, new_user_parameters, response = disposable_user #постоянно падает
-        main_page.login_to_account_create_user_api(new_user_parameters)
+        access_token, new_user_parameters, response = disposable_user
+        main_page.go_to_site()
+        main_page.navigation.click_orders_list_link()
+        main_page.navigation.login_to_account_create_user_api(new_user_parameters)
         main_page.count_ingredients()
         main_page.click_make_order_button()
 

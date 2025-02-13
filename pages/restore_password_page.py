@@ -1,13 +1,14 @@
 import allure
-
 from constants import UserData
 from locators.restore_password_locators import RestorePasswordPageLocators
 from pages.base_page import BasePage
+from pages.navigation_helper import NavigationHelper
 
 
 class RestorePasswordPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
+        self.navigation = NavigationHelper(driver)
 
     @allure.step('Подождать прогрузки Заголовки формы восстановления пароля')
     def await_restore_password_header(self):

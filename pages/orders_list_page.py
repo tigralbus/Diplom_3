@@ -1,11 +1,13 @@
 import allure
 from locators.orders_list_locators import OrdersListPageLocators
 from pages.base_page import BasePage
+from pages.navigation_helper import NavigationHelper
 
 
 class OrdersListPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
+        self.navigation = NavigationHelper(driver)
 
     @allure.step('кликнуть на заказ из ленты заказов')
     def click_top_order_in_orders_list(self):
@@ -25,7 +27,7 @@ class OrdersListPage(BasePage):
 
     @allure.step('получить список id заказов страницы Лента Заказов')
     def orders_ids_on_orders_list_page(self):
-        return self.create_list_of_orders_ids(OrdersListPageLocators.ORDERS_LIST)
+        return self.navigation.create_list_of_orders_ids(OrdersListPageLocators.ORDERS_LIST)
 
     @allure.step('подождать загрузку значения счетчика заказов за сегодня страницы Лента Заказов')
     def await_today_counter(self):

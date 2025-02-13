@@ -1,6 +1,5 @@
 import pytest
 from selenium import webdriver
-
 from api_routes.order_routes import OrderRoutes
 from api_routes.user_routes import UserRoutes
 from helpers import RandomHelper
@@ -20,12 +19,9 @@ def driver(request):
 
 @pytest.fixture(scope='function')
 def new_user_parameters():
-    # генерируем имя, емейл, пароль
     email = RandomHelper.random_email()
     password = RandomHelper.random_string(6)
     name = RandomHelper.random_name()
-
-    # собираем тело запроса
     parameters = {
         "email": email,
         "password": password,
@@ -33,9 +29,11 @@ def new_user_parameters():
     }
     return parameters
 
-
 @pytest.fixture(scope='function')
 def disposable_user(new_user_parameters):
+    """
+        Эта фикстура создает тестового юзера через апи, возвращает параметры и удаляет юзера после выполнения теста.
+    """
     user = UserRoutes()
     response = user.create_user(new_user_parameters)
     access_token = response.json()['accessToken']
@@ -45,6 +43,9 @@ def disposable_user(new_user_parameters):
 
 @pytest.fixture(scope='function')
 def disposable_order(new_user_parameters):
+    """
+        Эта фикстура создает тестового юзера и новый заказ через апи, возвращает параметры и удаляет юзера после выполнения теста.
+    """
     user = UserRoutes()
     response_create_user = user.create_user(new_user_parameters)
     access_token = response_create_user.json()['accessToken']

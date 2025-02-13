@@ -1,11 +1,13 @@
 import allure
 from locators.main_page_locators import MainPageLocators
 from pages.base_page import BasePage
+from pages.navigation_helper import NavigationHelper
 
 
 class MainPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
+        self.navigation = NavigationHelper(driver)
 
     @allure.step('кликнуть на ингредиент')
     def click_ingredient(self):

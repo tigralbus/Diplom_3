@@ -1,13 +1,14 @@
 import allure
-
 from locators.login_page_locators import LoginPageLocators
 from locators.personal_account_locators import PersonalAccountPageLocators
 from pages.base_page import BasePage
+from pages.navigation_helper import NavigationHelper
 
 
 class PersonalAccountPage(BasePage):
     def __init__(self, driver):
         super().__init__(driver)
+        self.navigation = NavigationHelper(driver)
 
     @allure.step('кликнуть на История заказов')
     def click_orders_history_link(self):
@@ -28,3 +29,7 @@ class PersonalAccountPage(BasePage):
     @allure.step('Подождать загрузки Профиля')
     def await_loaded_login_page_header(self):
         self.await_element(LoginPageLocators.LOGIN_FORM_HEADER)
+
+    @allure.step('получить список id заказов на странице истории заказов')
+    def get_history_orders_ids_list(self):
+        return self.navigation.create_list_of_orders_ids(PersonalAccountPageLocators.ORDERS_LIST_HISTORY)

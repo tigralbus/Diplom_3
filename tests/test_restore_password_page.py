@@ -11,7 +11,7 @@ class TestMainPageQuestions:
     def test_restore_link_redirect_to_restore_form(self, driver):
         restore_password_page = RestorePasswordPage(driver)
         restore_password_page.go_to_site()
-        restore_password_page.click_personal_account_link()
+        restore_password_page.navigation.click_personal_account_link()
         restore_password_page.click_restore_link()
 
         assert restore_password_page.get_current_url() == Constants.FORGOT_PASSWORD_URL
@@ -20,7 +20,7 @@ class TestMainPageQuestions:
     def test_enter_email_click_restore_button(self, driver):
         restore_password_page = RestorePasswordPage(driver)
         restore_password_page.go_to_site()
-        restore_password_page.click_personal_account_link()
+        restore_password_page.navigation.click_personal_account_link()
         restore_password_page.click_restore_link()
         restore_password_page.await_restore_password_header()
         restore_password_page.input_email_value()
@@ -34,7 +34,7 @@ class TestMainPageQuestions:
     def test_click_hide_show_button_activates_password_field(self, driver):
         restore_password_page = RestorePasswordPage(driver)
         restore_password_page.go_to_site()
-        restore_password_page.click_personal_account_link()
+        restore_password_page.navigation.click_personal_account_link()
         restore_password_page.click_restore_link()
         restore_password_page.await_restore_password_header()
         restore_password_page.input_email_value()
